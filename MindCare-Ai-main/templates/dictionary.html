@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Dictionary – MindCare AI{% endblock %}
+
+{% block main %}
+<section class="dictionary-page animate-fade">
+  <h1>Emotion & Mental Health Dictionary</h1>
+  <p class="intro">Simple definitions to support emotional awareness. This is not medical advice.</p>
+
+  {# Section 1: Split screen — Left: Concepts, Right: Phobias & Fears #}
+  <div class="dict-split">
+    <div class="dict-left">
+      <h2 class="dict-panel-title">Mental Health Concepts</h2>
+      <div class="concepts-list">
+        {% for c in concepts %}
+        <article class="concept-card">
+          <button type="button" class="concept-toggle" aria-expanded="false" aria-controls="concept-body-{{ loop.index }}" id="concept-head-{{ loop.index }}">
+            <span class="concept-name">{{ c.term }}</span>
+            <span class="concept-chevron">&#9660;</span>
+          </button>
+          <div id="concept-body-{{ loop.index }}" class="concept-body" role="region" aria-labelledby="concept-head-{{ loop.index }}" hidden>
+            <p>{{ c.definition }}</p>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="dict-right">
+      <h2 class="dict-panel-title">Phobias & Fears</h2>
+      <div class="fears-list">
+        {% for f in fears %}
+        <article class="fear-card">
+          <button type="button" class="fear-toggle" aria-expanded="false" aria-controls="fear-body-{{ loop.index }}" id="fear-head-{{ loop.index }}">
+            <span class="fear-emoji" aria-hidden="true">{{ f.emoji_or_icon or '📌' }}</span>
+            <span class="fear-name">{{ f.name }}</span>
+            <span class="fear-meaning">— {{ f.meaning }}</span>
+            <span class="fear-chevron">&#9660;</span>
+          </button>
+          <div id="fear-body-{{ loop.index }}" class="fear-body" role="region" aria-labelledby="fear-head-{{ loop.index }}" hidden>
+            <p>{{ f.description }}</p>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {# Section 2: Visual separator #}
+  <div class="dict-separator">
+    <p>Understanding emotions also means understanding fears.</p>
+  </div>
+
+  {# Section 3: Versus table (moved from Home) — Stress vs Anxiety vs Depression #}
+  <div class="comparison-dict">
+    <h2>Stress vs Anxiety vs Depression</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>Stress</th><th>Anxiety</th><th>Depression</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Focus</td><td>External demands</td><td>Future or uncertainty</td><td>Low mood, lack of interest</td></tr>
+          <tr><td>Duration</td><td>Often short-term</td><td>Can be ongoing</td><td>Often lasts weeks or more</td></tr>
+          <tr><td>Common feelings</td><td>Overwhelmed, tense</td><td>Worry, fear, restlessness</td><td>Sadness, emptiness, fatigue</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  function setupAccordion(sel) {
+    document.querySelectorAll(sel).forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var exp = this.getAttribute('aria-expanded') === 'true';
+        var id = this.getAttribute('aria-controls');
+        var body = document.getElementById(id);
+        this.setAttribute('aria-expanded', !exp);
+        if (body) body.hidden = exp;
+        this.classList.toggle('open', !exp);
+      });
+    });
+  }
+  setupAccordion('.concept-toggle');
+  setupAccordion('.fear-toggle');
+})();
+</script>
+{% endblock %}

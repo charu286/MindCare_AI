@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Dashboard – MindCare AI{% endblock %}
+
+{% block main %}
+<section class="dashboard-page">
+  <h1>Your 7‑Day Overview</h1>
+  <p class="intro">A simple view of your recent check-ins. Data is stored locally per session.</p>
+
+  <div class="dashboard-cards">
+    <div class="dash-card">
+      <h3>Average stress</h3>
+      <p class="value">{{ avg_stress }}%</p>
+    </div>
+    <div class="dash-card">
+      <h3>Peak stress</h3>
+      <p class="value">{{ peak_stress }}%</p>
+    </div>
+    <div class="dash-card">
+      <h3>Sessions</h3>
+      <p class="value">{{ session_count }}</p>
+    </div>
+  </div>
+
+  <div class="trend-list">
+    <h3>By day</h3>
+    {% if trends %}
+    <div class="chart-wrap" style="height:200px"><canvas id="dashChart"></canvas></div>
+    <ul>
+      {% for t in trends %}
+      <li>{{ t.date }} — avg {{ t.avg_stress }}%, peak {{ t.peak_stress }}%, {{ t.session_count }} session(s)</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="muted">No data for the last 7 days. Use Test or Chat to start.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{% if trends %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  var trends = {{ trends | tojson }};
+  var ctx = document.getElementById('dashChart');
+  if (!ctx || !trends.length) return;
+  var c = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#6b6560';
+  new Chart(ctx.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: trends.map(function(t){ return t.date; }),
+      datasets: [{ label: 'Avg stress %', data: trends.map(function(t){ return parseFloat(t.avg_stress) || 0; }), backgroundColor: 'rgba(139,154,125,0.6)' }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: c } } }, scales: { y: { beginAtZero: true, max: 100, ticks: { color: c } }, x: { ticks: { color: c } } } }
+  });
+})();
+</script>
+{% endif %}
+{% endblock %}

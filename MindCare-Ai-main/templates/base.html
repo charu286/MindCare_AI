@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}MindCare AI{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+</head>
+<body class="theme-light">
+  <div class="bg-3d" aria-hidden="true"></div>
+  <nav class="navbar" role="navigation" aria-label="Main">
+    <a href="{{ url_for('page.home') }}" class="brand">MindCare AI</a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('page.home') }}">Home</a></li>
+      <li><a href="{{ url_for('page.test') }}">Test</a></li>
+      <li><a href="{{ url_for('chat.chat_page') }}">Chat</a></li>
+      <li><a href="{{ url_for('page.dictionary') }}">Dictionary</a></li>
+      <li><a href="{{ url_for('page.dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ url_for('page.contact') }}">Contact</a></li>
+      {% if session.get('is_registered') %}
+      <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+      {% else %}
+      <li><a href="{{ url_for('auth.auth_page') }}">Login / Register</a></li>
+      {% endif %}
+      <li><button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark mode">&#9728;</button></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    {% block main %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p class="copyright">© 2026 MindCare AI. All rights reserved.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

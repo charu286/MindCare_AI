@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Login / Register – MindCare AI{% endblock %}
+
+{% block main %}
+<section class="auth-page animate-fade">
+  <h1>Account</h1>
+  <p class="auth-intro">Create an account only if you want to save your progress. You can use Test, Chat, and Dictionary without one.</p>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="auth-flashes">
+        {% for cat, msg in messages %}
+          <p class="flash {{ cat }}">{{ msg }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="auth-forms">
+    <div class="auth-box">
+      <h2>Log in</h2>
+      <form method="post" action="{{ url_for('auth.login') }}" class="auth-form">
+        <label for="login_email">Email</label>
+        <input type="email" id="login_email" name="email" required placeholder="you@example.com">
+        <label for="login_password">Password</label>
+        <input type="password" id="login_password" name="password" required>
+        <button type="submit">Log in</button>
+      </form>
+    </div>
+
+    <div class="auth-box">
+      <h2>Create account</h2>
+      <p class="auth-hint">Save your history and dashboard trends.</p>
+      <form method="post" action="{{ url_for('auth.register') }}" class="auth-form">
+        <label for="reg_email">Email</label>
+        <input type="email" id="reg_email" name="email" required placeholder="you@example.com">
+        <label for="reg_password">Password (at least 6 characters)</label>
+        <input type="password" id="reg_password" name="password" required minlength="6">
+        <button type="submit">Create account</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

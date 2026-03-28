@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}MindCare AI – Your 24/7 Emotional Support Companion{% endblock %}
+
+{% block main %}
+<section class="hero animate-fade">
+  <div class="hero-illus" aria-hidden="true">&nbsp;</div>
+  <h1>MindCare AI – Your 24/7 Emotional Support Companion</h1>
+  <p class="hero-sub">A safe space to explore your emotions. Not a replacement for professional care.</p>
+  <a href="{{ url_for('page.test') }}" class="cta">Take the Test</a>
+</section>
+
+<section class="disclaimer-block animate-fade">
+  <p class="disclaimer">{{ disclaimer_text }}</p>
+</section>
+
+<section class="cards">
+  <article class="card animate-slide-up" style="animation-delay: 0.1s">
+    <h2>Stress</h2>
+    <p>Stress is your body’s response to demands. It’s common and manageable with simple coping strategies and lifestyle changes.</p>
+  </article>
+  <article class="card animate-slide-up" style="animation-delay: 0.2s">
+    <h2>Anxiety</h2>
+    <p>Anxiety involves persistent worry or fear. Understanding triggers and practicing grounding techniques can help.</p>
+  </article>
+  <article class="card animate-slide-up" style="animation-delay: 0.3s">
+    <h2>Depression</h2>
+    <p>Depression can show up as low mood and loss of interest. Small steps and support can make a difference.</p>
+  </article>
+</section>
+
+<section class="sticky-notes">
+  <div class="note">Your feelings are valid.</div>
+  <div class="note">It’s okay to ask for help.</div>
+  <div class="note">Small steps still count.</div>
+</section>
+
+<section class="when-to-seek">
+  <h2>When to Seek Professional Help</h2>
+  <ul>
+    <li>Thoughts of hurting yourself or others</li>
+    <li>Feelings that get in the way of daily life for more than two weeks</li>
+    <li>Unable to cope despite trying self-help</li>
+  </ul>
+  <p>Reach out to a doctor, therapist, or a crisis helpline. You don’t have to face it alone.</p>
+</section>
+
+<section class="did-you-know animate-scale">
+  <h2>Did You Know?</h2>
+  <ul class="facts">
+    <li>Taking a few slow breaths can lower your heart rate and help you feel calmer within minutes.</li>
+    <li>Small, consistent steps—even one a day—often add up more than big, occasional efforts.</li>
+    <li>It’s okay to not be okay sometimes. Rest and self‑compassion are part of taking care of yourself.</li>
+  </ul>
+</section>
+{% endblock %}
